@@ -109,6 +109,10 @@
             }
         }
 
+        function showPasswordBox() {
+            document.getElementById("password-box").style.display = "block";
+        }
+
         function showYesNo() {
             const interaction = document.getElementById("interaction");
             interaction.innerHTML = `
@@ -131,7 +135,7 @@
         }
 
         window.onload = function() {
-            typeText(initialMessage);
+            typeText(initialMessage, showPasswordBox);
         };
     </script>
 </body>

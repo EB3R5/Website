@@ -102,8 +102,21 @@
             if (inputPassword === "bookmark") {
                 document.getElementById("password-box").style.display = "none";
                 document.getElementById("animated-text").innerHTML += "\n";
-                const nextMessage = "you remembered. It was nice to meet you. Do you want to stay in touch? (yes/no)";
-                typeText(nextMessage, showYesNo);
+                
+                // Split the message into parts
+                const part1 = "you remembered.";
+                const part2 = " It was nice to";
+                const part3 = " meet you.";
+                const part4 = " Do you want to stay in touch? (yes/no)";
+                
+                // Type the parts sequentially
+                typeText(part1, () => {
+                    typeText(part2, () => {
+                        typeText(part3, () => {
+                            typeText(part4, showYesNo);
+                        });
+                    });
+                });
             } else {
                 alert("Incorrect password. Try again.");
             }

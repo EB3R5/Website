@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .terminal {
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid #00FF00;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .line {
+            white-space: pre;
+            overflow: hidden;
+            display: inline-block;
+            border-right: 2px solid;
+            animation: caret 1s steps(1) infinite;
+        }
+
+        @keyframes caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        #password-box {
+            margin-top: 20px;
+            display: none;
+        }
+
+        input {
+            background-color: black;
+            color: #00FF00;
+            border: none;
+            border-bottom: 2px solid #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button {
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="line" id="animated-text"></div>
+        <div id="password-box">
+            <input type="password" id="password" placeholder="Enter password">
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        const message = "hey... :)";
+        let index = 0;
+        const speed = 150; // typing speed
+
+        function typeText() {
+            if (index < message.length) {
+                document.getElementById("animated-text").innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeText, speed);
+            } else {
+                document.getElementById("password-box").style.display = "block";
+            }
+        }
+
+        function checkPassword() {
+            const inputPassword = document.getElementById("password").value;
+            if (inputPassword === "bookmark") {
+                alert("Password correct!");
+            } else {
+                alert("Incorrect password. Try again.");
+            }
+        }
+
+        window.onload = typeText;
+    </script>
+</body>
+</html>

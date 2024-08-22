@@ -44,6 +44,11 @@
             display: none;
         }
 
+        #interaction {
+            margin-top: 20px;
+            display: none;
+        }
+
         input {
             background-color: black;
             color: #00FF00;
@@ -73,33 +78,61 @@
             <input type="password" id="password" placeholder="Enter password">
             <button onclick="checkPassword()">Submit</button>
         </div>
+        <div id="interaction"></div>
     </div>
 
     <script>
-        const message = "hey... :)";
+        const initialMessage = "hey... :)";
         let index = 0;
         const speed = 150; // typing speed
 
-        function typeText() {
+        function typeText(message, callback) {
             if (index < message.length) {
                 document.getElementById("animated-text").innerHTML += message.charAt(index);
                 index++;
-                setTimeout(typeText, speed);
+                setTimeout(() => typeText(message, callback), speed);
             } else {
-                document.getElementById("password-box").style.display = "block";
+                index = 0; // reset for the next message
+                if (callback) callback();
             }
         }
 
         function checkPassword() {
             const inputPassword = document.getElementById("password").value;
             if (inputPassword === "bookmark") {
-                alert("Password correct!");
+                document.getElementById("password-box").style.display = "none";
+                document.getElementById("animated-text").innerHTML += "\n";
+                const nextMessage = "you remembered. It was nice to meet you. Do you want to stay in touch? (yes/no)";
+                typeText(nextMessage, showYesNo);
             } else {
                 alert("Incorrect password. Try again.");
             }
         }
 
-        window.onload = typeText;
+        function showYesNo() {
+            const interaction = document.getElementById("interaction");
+            interaction.innerHTML = `
+                <button onclick="handleResponse('yes')">Yes</button>
+                <button onclick="handleResponse('no')">No</button>
+            `;
+            interaction.style.display = "block";
+        }
+
+        function handleResponse(response) {
+            const interaction = document.getElementById("interaction");
+            interaction.style.display = "none";
+            let responseMessage = "";
+            if (response === "yes") {
+                responseMessage = "\nGreat! Let's stay in touch.";
+            } else {
+                responseMessage = "\nNo worries, take care!";
+            }
+            document.getElementById("animated-text").innerHTML += responseMessage;
+        }
+
+        window.onload = function() {
+            typeText(initialMessage);
+        };
     </script>
 </body>
 </html>
